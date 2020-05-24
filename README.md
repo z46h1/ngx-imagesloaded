@@ -5,7 +5,7 @@
 [![NPM Downloads](https://img.shields.io/npm/dt/ngx-imagesloaded.svg?style=flat-square)](https://www.npmjs.com/package/ngx-imagesloaded)
 [![NPM License](https://img.shields.io/npm/l/ngx-imagesloaded.svg?style=flat-square)](https://www.npmjs.com/package/ngx-imagesloaded)
 
-Angular 2+ wrapper package around [imagesLoaded by Desandro](https://imagesloaded.desandro.com). Detect when images have been loaded.
+Angular 2+ wrapper package around [imagesLoaded by Desandro](https://imagesloaded.desandro.com). Detect when images have been loaded. It is forked project. The difference from the original is that directive is used on the collection instead on parent element. Fixed watching event failed, done, progress as well.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -49,9 +49,8 @@ export class AppModule { }
 **app.component.html**
 
 ```html
-<div imagesLoaded>
-  <img src="IMAGE_URL_1" alt="Image #1">
-  <img src="IMAGE_URL_2" alt="Image #2">
+<div class="parent">
+  <img *ngFor="let img of imgs" [src]="img.src" imagesLoaded>
 </div>
 ```
 
@@ -60,8 +59,8 @@ export class AppModule { }
 You can pass options input to container element;
 
 ```html
-<div imagesLoaded [options]="{ background: true }">
-  This container has background image
+<div class="parent">
+  <img *ngFor="let img of imgs" [src]="img.src" [options]="{ background: true } imagesLoaded>
 </div>
 ```
 
@@ -74,9 +73,8 @@ imgOptions: NgxImagesloadedOptions = {
 ```
 
 ```html
-<div imagesLoaded [options]="imgOptions">
-  <div class="item">#1</div>
-  <div class="item">#2</div>
+<div  class="parent">
+  <div *ngFor="let item of items" class="item" imagesLoaded [options]="imgOptions">{{ item.id }}</div>
 </div>
 ```
 
@@ -89,9 +87,8 @@ Container element outputs some events;
 For example: Triggered after all images have been loaded with at least one broken image;
 
 ```html
-<div imagesLoaded (fail)="handleFail($event)">
-  <img src="IMAGE_URL_1" alt="Image #1">
-  <img src="IMAGE_URL_2" alt="Image #2">
+<div class="parent">
+  <img *ngFor="let img of imgs" [src]="img.src" (fail)="handleFail($event)" imagesLoaded>
 </div>
 ```
 
