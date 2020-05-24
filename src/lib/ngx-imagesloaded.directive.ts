@@ -46,20 +46,20 @@ export class NgxImagesloadedDirective implements OnInit, OnDestroy {
     );
 
     this.instance.on('always', instance => this.always.emit(instance));
-    this.instance.on('done', instance => this.always.emit(instance));
-    this.instance.on('fail', instance => this.always.emit(instance));
+    this.instance.on('done', instance => this.done.emit(instance));
+    this.instance.on('fail', instance => this.fail.emit(instance));
     this.instance.on('progress', (instance, image) =>
-      this.always.emit({ instance, image })
+      this.progress.emit({ instance, image })
     );
   }
 
   //
   ngOnDestroy() {
     this.instance.off('always', instance => this.always.emit(instance));
-    this.instance.off('doffe', instance => this.always.emit(instance));
-    this.instance.off('fail', instance => this.always.emit(instance));
+    this.instance.off('done', instance => this.done.emit(instance));
+    this.instance.off('fail', instance => this.fail.emit(instance));
     this.instance.off('progress', (instance, image) =>
-      this.always.emit({ instance, image })
+      this.progress.emit({ instance, image })
     );
   }
 }
